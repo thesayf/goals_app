@@ -1,4 +1,4 @@
-name: CI/CD
+name: Deploy to Netlify
 
 on:
   push:
@@ -6,31 +6,28 @@ on:
       - master
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version: "16"
+          node-version: "16" # Modify the Node.js version as needed
 
       - name: Install dependencies
-        run: npm install
+        run: npm install # Replace with your dependency installation command
 
-      - name: Build app
-        run: npm run build
+      - name: Build
+        run: npm run build # Replace with your build command
 
       - name: Deploy to Netlify
-        run: |
-          # Install the Netlify CLI (if not already installed)
-          npm install -g netlify-cli
-
-          # Log in to your Netlify account (you will need your Netlify API token)
-          netlify login -a ${{ secrets.NETLIFY_API_TOKEN }}
-
-          # Deploy to Netlify
-          netlify deploy --prod
+        uses: nwtgck/actions-netlify@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          netlify-auth-token: ${{ NETLIFY_API_TOKEN }}
+          netlify-site-id: ${{ secrets.NETLIFY_SITE_ID }}
+          build-dir: ./ # Modify this path as needed

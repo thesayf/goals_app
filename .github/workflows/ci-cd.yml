@@ -1,4 +1,4 @@
-name: "My Workflow"
+name: Deploy to Netlify
 
 on:
   push:
@@ -8,11 +8,26 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3 # This step checks out your code
-      - uses: jsmrcaga/action-netlify-deploy@v2.0.0
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_API_TOKEN }} # Make sure this name matches your secret name
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID}}
+          node-version: "16" # or another version if you prefer
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the project
+        run: npm run build
+
+      - name: Deploy to Netlify
+        uses: jsmrcaga/action-netlify-deploy@v2.0.0
+        with:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_API_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_DEPLOY_TO_PROD: true
-          build_directory: ./ # If your built files are in a different directory, change this
+          build_directory: build # this points to the directory created by the npm run build command

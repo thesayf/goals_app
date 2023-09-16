@@ -25,7 +25,7 @@ jobs:
         run: npm run build # Replace with your build command
 
       - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v1
+        uses: nwtgck/actions-netlify@v2.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           netlify-auth-token: ${{ secrets.NETLIFY_API_TOKEN }}

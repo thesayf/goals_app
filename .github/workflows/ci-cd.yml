@@ -14,4 +14,5 @@ jobs:
         with:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_API_TOKEN }} # Make sure this name matches your secret name
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID}}
+          NETLIFY_DEPLOY_TO_PROD: true
           build_directory: ./ # If your built files are in a different directory, change this

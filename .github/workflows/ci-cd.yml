@@ -1,22 +1,16 @@
-name: Publish on Netlify
+name: "My Workflow"
 
 on:
   push:
     branches:
-      - master # Specify the branch you want to trigger deployments from
+      - master
 
 jobs:
-  publish:
-    runs-on: ubuntu-latest
-
+  deploy:
+    name: "Deploy to Netlify"
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Publish
-        uses: netlify/actions/cli@master
+      - uses: jsmrcaga/action-netlify-deploy@v2.0.0
         with:
-          args: deploy --dir=site --functions=functions # Customize the deploy command as needed
-        env:
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_API_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_DEPLOY_TO_PROD: true

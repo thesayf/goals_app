@@ -28,6 +28,6 @@ jobs:
         uses: nwtgck/actions-netlify@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          netlify-auth-token: ${{ NETLIFY_API_TOKEN }}
+          netlify-auth-token: ${{ secrets.NETLIFY_API_TOKEN }}
           netlify-site-id: ${{ secrets.NETLIFY_SITE_ID }}
           build-dir: ./ # Modify this path as needed

@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - develop
 
 jobs:
   deploy:
@@ -28,6 +29,6 @@ jobs:
         uses: jsmrcaga/action-netlify-deploy@v2.0.0
         with:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_API_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-          NETLIFY_DEPLOY_TO_PROD: true
+          NETLIFY_SITE_ID: ${{ github.ref == 'refs/heads/master' && secrets.NETLIFY_PROD_SITE_ID || secrets.NETLIFY_DEV_SITE_ID }}
+          NETLIFY_DEPLOY_TO_PROD: ${{ github.ref == 'refs/heads/master' }}
           build_directory: build # this points to the directory created by the npm run build command
